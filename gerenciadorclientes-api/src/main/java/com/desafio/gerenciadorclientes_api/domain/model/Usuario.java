@@ -27,7 +27,4 @@ public class Usuario {
   
   @Column(nullable = false)
   private Boolean isAdmin;
-
-  @Column(nullable = false)
-  private Long idPessoa;
 }
