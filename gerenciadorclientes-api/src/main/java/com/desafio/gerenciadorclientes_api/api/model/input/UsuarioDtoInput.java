@@ -11,13 +11,7 @@ import lombok.Setter;
 public class UsuarioDtoInput {
 
   @NotBlank
-  private String nome;
-
-  @NotBlank
   private String username;
-  
-  @NotBlank
-  private String email;
 
   @NotBlank
   private String password;

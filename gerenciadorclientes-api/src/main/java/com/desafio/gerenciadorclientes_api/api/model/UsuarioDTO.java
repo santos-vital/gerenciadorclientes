@@ -11,5 +11,4 @@ public class UsuarioDTO {
   private String username;
   private String password;
   private Boolean isAdmin;
-  private String nome;
 }
