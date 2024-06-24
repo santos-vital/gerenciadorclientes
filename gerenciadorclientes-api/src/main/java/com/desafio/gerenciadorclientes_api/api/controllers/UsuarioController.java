@@ -1,5 +1,7 @@
 package com.desafio.gerenciadorclientes_api.api.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +20,11 @@ import com.desafio.gerenciadorclientes_api.domain.repository.UsuarioRepository;
 import com.desafio.gerenciadorclientes_api.domain.service.CadastroUsuarioService;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+
+
 
 @RestController
 @RequestMapping(path = "/usuarios", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -42,5 +49,28 @@ public class UsuarioController {
     usuario = cadastroUsuario.salvar(usuario);
 
     return usuarioDtoAssembler.toDTO(usuario);
+  }
+
+  @GetMapping("/{usuarioId}")
+  public UsuarioDTO buscar(@PathVariable Long usuarioId) {
+    Usuario usuario = cadastroUsuario.buscarOuFalhar(usuarioId);
+
+    return usuarioDtoAssembler.toDTO(usuario);
+  }
+
+  @GetMapping
+  public List<UsuarioDTO> listar() {
+    
+    return usuarioDtoAssembler.toCollectionDTO(usuarioRepository.findAll());
+  }
+  
+  @PutMapping("/{usuarioId}")
+  public UsuarioDTO atualizar(@PathVariable Long usuarioId, @RequestBody @Valid UsuarioDtoInput usuarioDtoInput) {
+      Usuario usuarioAtual = cadastroUsuario.buscarOuFalhar(usuarioId);
+
+      usuarioDtoDisassembler.copyToDomainObject(usuarioDtoInput, usuarioAtual);
+      usuarioAtual = cadastroUsuario.salvar(usuarioAtual);
+      
+      return usuarioDtoAssembler.toDTO(usuarioAtual);
   }
 }
