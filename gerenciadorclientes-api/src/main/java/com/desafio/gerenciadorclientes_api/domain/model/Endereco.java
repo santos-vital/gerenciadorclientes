@@ -26,4 +26,7 @@ public class Endereco {
 
   @Column(name = "endereco_didade")
   private String cidade;
+
+  @Column(name = "endereco_didade")
+  private String uf;
 }
