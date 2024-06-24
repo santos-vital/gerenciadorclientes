@@ -15,7 +15,6 @@ public class BuscarEnderecoService {
   EnderecoFeign enderecoFeign;
   
   public EnderecoResponseDTO executar(EnderecoDtoInput enderecoDtoInput) {
-    
     // return enderecoFeign.buscaEnderecoCep(enderecoDtoInput.getCep());
 
     EnderecoDTO enderecoDTO = enderecoFeign.buscaEnderecoCep(enderecoDtoInput.getCep());
@@ -23,7 +22,7 @@ public class BuscarEnderecoService {
     // Transforma EnderecoDTO em EnderecoResponseDTO
     EnderecoResponseDTO responseDTO = transformarParaEnderecoResponseDTO(enderecoDTO);
 
-    return responseDTO;
+    return responseDTO;    
   }
 
   private EnderecoResponseDTO transformarParaEnderecoResponseDTO(EnderecoDTO enderecoDTO) {
