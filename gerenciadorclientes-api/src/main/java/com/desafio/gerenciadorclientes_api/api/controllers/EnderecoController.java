@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.desafio.gerenciadorclientes_api.api.model.EnderecoDTO;
 import com.desafio.gerenciadorclientes_api.api.model.EnderecoResponseDTO;
 import com.desafio.gerenciadorclientes_api.api.model.input.EnderecoDtoInput;
 import com.desafio.gerenciadorclientes_api.domain.service.BuscarEnderecoService;

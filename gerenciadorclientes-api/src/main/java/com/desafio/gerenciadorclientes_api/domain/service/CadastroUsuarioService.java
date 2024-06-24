@@ -18,12 +18,14 @@ public class CadastroUsuarioService {
 
   UsuarioDtoInput usuarioDtoInput = new UsuarioDtoInput();
 
+  @SuppressWarnings("null")
   @Transactional
   public Usuario salvar(Usuario usuario) {
 
     return usuarioRepository.save(usuario);
   }
 
+  @SuppressWarnings("null")
   public Usuario buscarOuFalhar(Long usuarioId) {
 
     return usuarioRepository.findById(usuarioId).orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));

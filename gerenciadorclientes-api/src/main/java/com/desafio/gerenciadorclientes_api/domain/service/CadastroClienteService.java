@@ -15,12 +15,14 @@ public class CadastroClienteService {
   @Autowired
   private ClienteRepository clienteRepository;
 
+  @SuppressWarnings("null")
   @Transactional
   public Cliente salvar(Cliente cliente) {
 
     return clienteRepository.save(cliente);
   }
 
+  @SuppressWarnings("null")
   public Cliente buscarOuFalhar(Long clienteId) {
 
     return clienteRepository.findById(clienteId).orElseThrow(() -> new ClienteNaoEncontradoException(clienteId));
