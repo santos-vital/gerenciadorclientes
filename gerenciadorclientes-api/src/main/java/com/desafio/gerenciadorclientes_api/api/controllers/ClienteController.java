@@ -12,9 +12,14 @@ import com.desafio.gerenciadorclientes_api.domain.service.CadastroClienteService
 
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -41,5 +46,27 @@ public class ClienteController {
     Cliente cliente = clienteDtoDisassembler.toDomainObject(clienteDtoInput);
 
     return clienteDtoAssembler.toDTO(cadastroCliente.salvar(cliente));
+  }
+
+  @GetMapping
+  public List<ClienteDTO> listar() {
+
+    return clienteDtoAssembler.toCollectionDTO(clienteRepository.findAll());
+  }
+
+  @GetMapping("/{clienteId}")
+  public ClienteDTO buscar(@PathVariable Long clienteId) {
+    Cliente cliente = cadastroCliente.buscarOuFalhar(clienteId);
+
+    return clienteDtoAssembler.toDTO(cliente);
+  }
+
+  @PutMapping("/{clienteId}") 
+  public ClienteDTO atualizar(@PathVariable Long clienteId, @RequestBody @Valid ClienteDtoInput clienteDtoInput) {
+    Cliente clienteAtual = cadastroCliente.buscarOuFalhar(clienteId);
+
+    clienteDtoDisassembler.copyToDomainObject(clienteDtoInput, clienteAtual);
+
+    return clienteDtoAssembler.toDTO(cadastroCliente.salvar(clienteAtual));
   }
 }

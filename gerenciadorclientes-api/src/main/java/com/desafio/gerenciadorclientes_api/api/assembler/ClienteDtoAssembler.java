@@ -21,7 +21,7 @@ public class ClienteDtoAssembler {
     return modelMapper.map(cliente, ClienteDTO.class);
   }
 
-  public List<ClienteDTO> toCollectionDtos(List<Cliente> clientes) {
+  public List<ClienteDTO> toCollectionDTO(List<Cliente> clientes) {
 
     return clientes.stream().map(cliente -> toDTO(cliente)).collect(Collectors.toList());
   }

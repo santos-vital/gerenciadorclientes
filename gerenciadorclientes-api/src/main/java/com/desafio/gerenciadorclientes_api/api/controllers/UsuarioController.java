@@ -71,6 +71,6 @@ public class UsuarioController {
       usuarioDtoDisassembler.copyToDomainObject(usuarioDtoInput, usuarioAtual);
       usuarioAtual = cadastroUsuario.salvar(usuarioAtual);
       
-      return usuarioDtoAssembler.toDTO(usuarioAtual);
+      return usuarioDtoAssembler.toDTO(cadastroUsuario.salvar(usuarioAtual));
   }
 }
