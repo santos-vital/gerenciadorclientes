@@ -7,6 +7,7 @@ import com.desafio.gerenciadorclientes_api.api.model.EnderecoDTO;
 import com.desafio.gerenciadorclientes_api.api.model.EnderecoResponseDTO;
 import com.desafio.gerenciadorclientes_api.api.model.input.EnderecoDtoInput;
 import com.desafio.gerenciadorclientes_api.core.feignclient.EnderecoFeign;
+import com.desafio.gerenciadorclientes_api.domain.exception.CepIncorretoException;
 
 @Service
 public class BuscarEnderecoService {
@@ -15,14 +16,16 @@ public class BuscarEnderecoService {
   EnderecoFeign enderecoFeign;
   
   public EnderecoResponseDTO executar(EnderecoDtoInput enderecoDtoInput) {
-    // return enderecoFeign.buscaEnderecoCep(enderecoDtoInput.getCep());
 
-    EnderecoDTO enderecoDTO = enderecoFeign.buscaEnderecoCep(enderecoDtoInput.getCep());
-
-    // Transforma EnderecoDTO em EnderecoResponseDTO
-    EnderecoResponseDTO responseDTO = transformarParaEnderecoResponseDTO(enderecoDTO);
-
-    return responseDTO;    
+    try {
+      EnderecoDTO enderecoDTO = enderecoFeign.buscaEnderecoCep(enderecoDtoInput.getCep());
+  
+      EnderecoResponseDTO responseDTO = transformarParaEnderecoResponseDTO(enderecoDTO);
+  
+      return responseDTO;    
+    } catch (Exception e) {
+      throw new CepIncorretoException();
+    }
   }
 
   private EnderecoResponseDTO transformarParaEnderecoResponseDTO(EnderecoDTO enderecoDTO) {
