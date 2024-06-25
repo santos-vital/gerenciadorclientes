@@ -1,5 +1,8 @@
 package com.desafio.gerenciadorclientes_api.api.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.desafio.gerenciadorclientes_api.domain.model.Endereco;
 
 import jakarta.persistence.Embedded;
@@ -17,6 +20,6 @@ public class ClienteDTO {
   @Embedded
   private Endereco endereco;
 
-  private String telefone;
-  private String email;
+  private List<TelefoneDTO> telefones = new ArrayList<>();
+  private List<EmailDTO> emails = new ArrayList<>();
 }

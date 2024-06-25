@@ -6,6 +6,8 @@ import com.desafio.gerenciadorclientes_api.api.assembler.ClienteDtoAssembler;
 import com.desafio.gerenciadorclientes_api.api.assembler.ClienteDtoDisassembler;
 import com.desafio.gerenciadorclientes_api.api.model.ClienteDTO;
 import com.desafio.gerenciadorclientes_api.api.model.input.ClienteDtoInput;
+import com.desafio.gerenciadorclientes_api.domain.exception.EmailTelefoenNaoInformadoException;
+import com.desafio.gerenciadorclientes_api.domain.exception.NegocioException;
 import com.desafio.gerenciadorclientes_api.domain.model.Cliente;
 import com.desafio.gerenciadorclientes_api.domain.repository.ClienteRepository;
 import com.desafio.gerenciadorclientes_api.domain.service.CadastroClienteService;
@@ -43,9 +45,15 @@ public class ClienteController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public ClienteDTO adicionar(@RequestBody @Valid ClienteDtoInput clienteDtoInput) {
-    Cliente cliente = clienteDtoDisassembler.toDomainObject(clienteDtoInput);
-
-    return clienteDtoAssembler.toDTO(cadastroCliente.salvar(cliente));
+    try {
+      
+      Cliente cliente = clienteDtoDisassembler.toDomainObject(clienteDtoInput);
+  
+      return clienteDtoAssembler.toDTO(cadastroCliente.salvar(cliente));
+    } catch (EmailTelefoenNaoInformadoException e) {
+      throw new NegocioException(e.getMessage());
+    }
+    
   }
 
   @GetMapping

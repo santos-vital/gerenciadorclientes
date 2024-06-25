@@ -28,9 +28,11 @@ public class WebSecurityConfig {
         return manager;
     }
 
+    @SuppressWarnings("removal")
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .headers(headers -> headers.frameOptions().disable())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(HttpMethod.POST, "/clientes/**").hasRole("ADMIN")

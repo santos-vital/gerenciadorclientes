@@ -1,10 +1,15 @@
 package com.desafio.gerenciadorclientes_api.api.model.input;
 
+import java.util.List;
+
+import com.desafio.gerenciadorclientes_api.api.model.EmailDTO;
+import com.desafio.gerenciadorclientes_api.api.model.TelefoneDTO;
 import com.desafio.gerenciadorclientes_api.domain.model.Endereco;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,9 +27,9 @@ public class ClienteDtoInput {
   @Valid
   private Endereco endereco;
 
-  @NotBlank
-  private String telefone;
+  @NotNull
+  private List<TelefoneDTO> telefones;
 
-  @NotBlank
-  private String email;
+  @NotNull
+  private List<EmailDTO> emails;
 }
