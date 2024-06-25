@@ -22,4 +22,15 @@ public class ClienteDTO {
 
   private List<TelefoneDTO> telefones = new ArrayList<>();
   private List<EmailDTO> emails = new ArrayList<>();
+
+  public String getCpf() {
+      return formatCpf(cpf);
+  }
+
+  private String formatCpf(String cpf) {
+      if (cpf != null && cpf.length() == 11) {
+          return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9, 11);
+      }
+      return cpf;
+  }
 }

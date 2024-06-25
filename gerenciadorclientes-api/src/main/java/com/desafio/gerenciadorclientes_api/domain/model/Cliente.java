@@ -32,6 +32,8 @@ public class Cliente {
   private String nome;
 
   @Column(nullable = false)
+  @Size(min = 11, max = 11, message = "O CPF deve ter exatamente 11 dígitos")
+  @Pattern(regexp = "\\d{11}", message = "O CPF deve conter apenas dígitos")
   private String cpf;
 
   @Embedded
