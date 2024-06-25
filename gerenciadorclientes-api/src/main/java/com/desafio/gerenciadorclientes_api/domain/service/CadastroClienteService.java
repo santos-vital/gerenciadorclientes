@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.desafio.gerenciadorclientes_api.domain.exception.ClienteNaoEncontradoException;
 import com.desafio.gerenciadorclientes_api.domain.exception.EmailTelefoenNaoInformadoException;
+import com.desafio.gerenciadorclientes_api.domain.exception.NegocioException;
 import com.desafio.gerenciadorclientes_api.domain.model.Cliente;
 import com.desafio.gerenciadorclientes_api.domain.model.Email;
 import com.desafio.gerenciadorclientes_api.domain.model.Telefone;
@@ -31,7 +32,11 @@ public class CadastroClienteService {
     }
 
     if(cliente.getEmails().size() < 1 || cliente.getTelefones().size() < 1) {
-      throw new EmailTelefoenNaoInformadoException(String.format("É necessário incluir pelo menos um telefone ou email", 400));
+      throw new EmailTelefoenNaoInformadoException(String.format("É necessário incluir pelo menos um telefone ou email"));
+    }
+
+    if (clienteRepository.existsByCpf(cliente.getCpf())) {
+      throw new NegocioException("Já existe um cliente cadastrado com o CPF informado!");
     }
 
     return clienteRepository.save(cliente);

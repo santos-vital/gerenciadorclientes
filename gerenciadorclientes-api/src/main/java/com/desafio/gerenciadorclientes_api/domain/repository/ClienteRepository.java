@@ -8,4 +8,5 @@ import com.desafio.gerenciadorclientes_api.domain.model.Cliente;
 @Component
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
   
+  boolean existsByCpf(String cpf);
 }

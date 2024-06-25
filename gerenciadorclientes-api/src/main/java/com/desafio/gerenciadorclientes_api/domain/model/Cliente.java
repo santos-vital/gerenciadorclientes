@@ -11,6 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,6 +27,8 @@ public class Cliente {
   private Long id;
 
   @Column(nullable = false)
+  @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
+  @Pattern(regexp = "^[a-zA-Z0-9 ]*$", message = "O nome deve conter apenas letras, espaços e números")
   private String nome;
 
   @Column(nullable = false)

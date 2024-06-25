@@ -23,6 +23,9 @@ public class Telefone {
   @Column(nullable = false)
   private String numero;
 
+  @Column(nullable = false)
+  private String tipo;
+
   @ManyToOne
   @JoinColumn(name = "cliente_id")
   private Cliente cliente;
