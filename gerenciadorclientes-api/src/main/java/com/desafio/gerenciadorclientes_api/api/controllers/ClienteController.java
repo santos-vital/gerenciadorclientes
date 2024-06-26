@@ -5,7 +5,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.desafio.gerenciadorclientes_api.api.assembler.ClienteDtoAssembler;
 import com.desafio.gerenciadorclientes_api.api.assembler.ClienteDtoDisassembler;
 import com.desafio.gerenciadorclientes_api.api.model.ClienteDTO;
+import com.desafio.gerenciadorclientes_api.api.model.EnderecoDTO;
 import com.desafio.gerenciadorclientes_api.api.model.input.ClienteDtoInput;
+import com.desafio.gerenciadorclientes_api.core.feignclient.EnderecoFeign;
+import com.desafio.gerenciadorclientes_api.domain.exception.CepIncorretoException;
 import com.desafio.gerenciadorclientes_api.domain.exception.EmailTelefoenNaoInformadoException;
 import com.desafio.gerenciadorclientes_api.domain.exception.NegocioException;
 import com.desafio.gerenciadorclientes_api.domain.model.Cliente;
@@ -42,16 +45,38 @@ public class ClienteController {
   @Autowired
   private ClienteDtoDisassembler clienteDtoDisassembler;
 
+  @Autowired
+  EnderecoFeign enderecoFeign;
+
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public ClienteDTO adicionar(@RequestBody @Valid ClienteDtoInput clienteDtoInput) {
     try {
       
       Cliente cliente = clienteDtoDisassembler.toDomainObject(clienteDtoInput);
+
+      EnderecoDTO enderecoDTO = enderecoFeign.buscaEnderecoCep(cliente.getEndereco().getCep());
+
+      cliente.getEndereco().setCep(enderecoDTO.getCep());
+      cliente.getEndereco().setLogradouro(enderecoDTO.getLogradouro());
+
+      if(enderecoDTO.getComplemento() == "") {
+        cliente.getEndereco().setComplemento(null);
+      }
+
+      cliente.getEndereco().setBairro(enderecoDTO.getBairro());
+      cliente.getEndereco().setCidade(enderecoDTO.getLocalidade());
+      cliente.getEndereco().setUf(enderecoDTO.getUf());
+
+      if (cliente.getEndereco().getCep() == null) {
+        throw new CepIncorretoException();
+      }
   
       return clienteDtoAssembler.toDTO(cadastroCliente.salvar(cliente));
     } catch (EmailTelefoenNaoInformadoException e) {
       throw new NegocioException(e.getMessage());
+    } catch (Exception e) {
+      throw new CepIncorretoException();
     }
     
   }
@@ -70,11 +95,12 @@ public class ClienteController {
   }
 
   @PutMapping("/{clienteId}") 
-  public ClienteDTO atualizar(@PathVariable Long clienteId, @RequestBody @Valid ClienteDtoInput clienteDtoInput) {
+  public ClienteDTO atualizar(@PathVariable Long clienteId, @RequestBody @Valid ClienteDtoInput clienteDtoInput, Cliente cliente) {
     Cliente clienteAtual = cadastroCliente.buscarOuFalhar(clienteId);
 
     clienteDtoDisassembler.copyToDomainObject(clienteDtoInput, clienteAtual);
+    clienteAtual = cadastroCliente.salvar(clienteAtual);
 
-    return clienteDtoAssembler.toDTO(cadastroCliente.salvar(clienteAtual));
+    return clienteDtoAssembler.toDTO(clienteAtual);
   }
 }
