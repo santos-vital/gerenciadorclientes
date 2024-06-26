@@ -31,4 +31,15 @@ public class Endereco {
   @Column(name = "endereco_uf")
   @NotBlank
   private String uf;
+
+  private String addCepMask(String cep) {
+    if (cep != null && cep.length() == 8) {
+        return cep.substring(0, 5) + "-" + cep.substring(5);
+    }
+    return cep;
+  }
+
+  public String getCep() {
+    return addCepMask(cep);
+  }
 }

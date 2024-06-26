@@ -15,6 +15,7 @@ import com.desafio.gerenciadorclientes_api.domain.model.Cliente;
 import com.desafio.gerenciadorclientes_api.domain.repository.ClienteRepository;
 import com.desafio.gerenciadorclientes_api.domain.service.CadastroClienteService;
 
+import feign.FeignException;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -75,10 +76,9 @@ public class ClienteController {
       return clienteDtoAssembler.toDTO(cadastroCliente.salvar(cliente));
     } catch (EmailTelefoenNaoInformadoException e) {
       throw new NegocioException(e.getMessage());
-    } catch (Exception e) {
+    } catch (FeignException e) {
       throw new CepIncorretoException();
-    }
-    
+    }    
   }
 
   @GetMapping

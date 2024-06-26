@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.desafio.gerenciadorclientes_api.domain.exception.ClienteNaoEncontradoException;
 import com.desafio.gerenciadorclientes_api.domain.exception.EmailTelefoenNaoInformadoException;
 import com.desafio.gerenciadorclientes_api.domain.model.Cliente;
-import com.desafio.gerenciadorclientes_api.domain.model.Email;
+import com.desafio.gerenciadorclientes_api.domain.model.EnderecoEmail;
 import com.desafio.gerenciadorclientes_api.domain.model.Telefone;
 import com.desafio.gerenciadorclientes_api.domain.repository.ClienteRepository;
 
@@ -22,7 +22,10 @@ public class CadastroClienteService {
   @Transactional
   public Cliente salvar(Cliente cliente) {
 
-    for (Email email : cliente.getEmails()) {
+    String cepSemMascara = cliente.getEndereco().getCep().replaceAll("[^0-9]", "");
+    cliente.getEndereco().setCep(cepSemMascara);
+
+    for (EnderecoEmail email : cliente.getEmails()) {
       email.setCliente(cliente);
     }
 
