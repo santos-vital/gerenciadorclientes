@@ -5,8 +5,11 @@ GerenciadorclienteAPI é uma aplicação construída com Java e Spring Boot 3 qu
 ## Funcionalidades
 
 - Cadastro de usuários
+    - Permite a criação de novos usuários no sistema, armazenando informações como username, password e se é um adm ou não.
 - Cadastro de clientes
+    - Permite a criação de novos clientes no sistema, armazenando informações como cpf, nome, e-mails, telefones e endereço.
 - Consulta de endereço através da API do ViaCEP
+    - Permite um endereço pelo CEP.
 
 ## Tecnologias Utilizadas
 
@@ -57,13 +60,35 @@ GerenciadorclienteAPI é uma aplicação construída com Java e Spring Boot 3 qu
 
 ### Listar Clientes
 
+### Response
+
+- *200 OK*
+
 - **GET** `/clientes`
 
 ### Consultar Cliente por ID
 
+### Path Parameter
+
+- *clienteId*: ID do cliente.
+
+### Response
+
+- *200 OK*
+- *404 Not Found*: Cliente não encontrado.
+
 - **GET** `/clientes/{clienteId}`
 
 ### Atualizar Cliente
+
+### Path Parameter
+
+- *clienteId*: ID do cliente a ser deletado.
+
+### Response
+
+- *200 OK*
+- *404 Not Found*: Cliente não encontrado.
 
 - **PUT** `/clientes/{clienteId}`
 
@@ -98,9 +123,17 @@ GerenciadorclienteAPI é uma aplicação construída com Java e Spring Boot 3 qu
     }
     ```
 
-### Deletar Cliente
+## Deletar Cliente
+*DELETE /clientes/{clienteId}*
 
-- **DELETE** `/clientes/{clienteId}`
+### Path Parameter
+
+- *clienteId*: ID do cliente a ser deletado.
+
+### Response
+
+- *204 NO CONTENT*
+- *404 Not Found*: Cliente não encontrado.
 
 ## Exemplo de Uso
 
