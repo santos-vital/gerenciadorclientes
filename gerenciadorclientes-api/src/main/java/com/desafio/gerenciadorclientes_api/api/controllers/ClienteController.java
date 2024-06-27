@@ -72,13 +72,17 @@ public class ClienteController {
       if (cliente.getEndereco().getCep() == null) {
         throw new CepIncorretoException();
       }
+
+      if (clienteRepository.existsByCpf(cliente.getCpf())) {
+        throw new NegocioException("Já existe um cliente cadastrado com o CPF informado!");
+      }
   
       return clienteDtoAssembler.toDTO(cadastroCliente.salvar(cliente));
     } catch (EmailTelefoenNaoInformadoException e) {
       throw new NegocioException(e.getMessage());
     } catch (FeignException e) {
       throw new CepIncorretoException();
-    }    
+    }
   }
 
   @GetMapping
