@@ -3,8 +3,8 @@ package com.desafio.gerenciadorclientes_api.api.model.input;
 import java.util.List;
 
 import com.desafio.gerenciadorclientes_api.api.model.EmailDTO;
+import com.desafio.gerenciadorclientes_api.api.model.EnderecoDTO;
 import com.desafio.gerenciadorclientes_api.api.model.TelefoneDTO;
-import com.desafio.gerenciadorclientes_api.domain.model.Endereco;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -24,7 +24,7 @@ public class ClienteDtoInput {
 
   @NotNull
   @Valid
-  private Endereco endereco;
+  private EnderecoDTO endereco;
 
   @NotNull
   private List<TelefoneDTO> telefones;
