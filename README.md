@@ -124,7 +124,7 @@ GerenciadorclienteAPI é uma aplicação construída com Java e Spring Boot 3 qu
     ```
 
 ## Deletar Cliente
-**DELETE** /clientes/{clienteId}*
+- **DELETE** /clientes/{clienteId}*
 
 ### Path Parameter
 
