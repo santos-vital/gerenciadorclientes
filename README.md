@@ -60,13 +60,15 @@ GerenciadorclienteAPI é uma aplicação construída com Java e Spring Boot 3 qu
 
 ### Listar Clientes
 
+- **GET** `/clientes`
+
 ### Response
 
 - *200 OK*
 
-- **GET** `/clientes`
-
 ### Consultar Cliente por ID
+
+- **GET** `/clientes/{clienteId}`
 
 ### Path Parameter
 
@@ -77,9 +79,9 @@ GerenciadorclienteAPI é uma aplicação construída com Java e Spring Boot 3 qu
 - *200 OK*
 - *404 Not Found*: Cliente não encontrado.
 
-- **GET** `/clientes/{clienteId}`
-
 ### Atualizar Cliente
+
+- **PUT** `/clientes/{clienteId}`
 
 ### Path Parameter
 
@@ -89,8 +91,6 @@ GerenciadorclienteAPI é uma aplicação construída com Java e Spring Boot 3 qu
 
 - *200 OK*
 - *404 Not Found*: Cliente não encontrado.
-
-- **PUT** `/clientes/{clienteId}`
 
     ```json
     {
@@ -124,7 +124,7 @@ GerenciadorclienteAPI é uma aplicação construída com Java e Spring Boot 3 qu
     ```
 
 ## Deletar Cliente
-*DELETE /clientes/{clienteId}*
+**DELETE** /clientes/{clienteId}*
 
 ### Path Parameter
 
