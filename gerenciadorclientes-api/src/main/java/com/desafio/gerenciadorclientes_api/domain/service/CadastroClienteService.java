@@ -1,8 +1,8 @@
 package com.desafio.gerenciadorclientes_api.domain.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.desafio.gerenciadorclientes_api.domain.exception.ClienteNaoEncontradoException;
 import com.desafio.gerenciadorclientes_api.domain.exception.EmailTelefoenNaoInformadoException;
@@ -10,6 +10,8 @@ import com.desafio.gerenciadorclientes_api.domain.model.Cliente;
 import com.desafio.gerenciadorclientes_api.domain.model.EnderecoEmail;
 import com.desafio.gerenciadorclientes_api.domain.model.Telefone;
 import com.desafio.gerenciadorclientes_api.domain.repository.ClienteRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class CadastroClienteService {
@@ -37,6 +39,17 @@ public class CadastroClienteService {
     }
 
     return clienteRepository.save(cliente);
+  }
+
+  @SuppressWarnings("null")
+  @Transactional
+  public void excluir(Cliente cliente) {
+    try {
+      clienteRepository.deleteById(cliente.getId());
+      clienteRepository.flush();
+    } catch (EmptyResultDataAccessException e) {
+      throw new ClienteNaoEncontradoException(cliente.getId());
+    }
   }
 
   @SuppressWarnings("null")

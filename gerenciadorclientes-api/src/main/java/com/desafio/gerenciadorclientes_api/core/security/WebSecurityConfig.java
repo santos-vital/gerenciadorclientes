@@ -37,6 +37,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(HttpMethod.POST, "/clientes/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/clientes/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/clientes/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/clientes/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/usuarios/**").hasRole("ADMIN")
                         .requestMatchers("/endereco/**").hasRole("ADMIN")
