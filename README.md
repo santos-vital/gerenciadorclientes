@@ -9,7 +9,7 @@ GerenciadorclienteAPI é uma aplicação construída com Java e Spring Boot 3 qu
 - Cadastro de clientes
     - Permite a criação de novos clientes no sistema, armazenando informações como cpf, nome, e-mails, telefones e endereço.
 - Consulta de endereço através da API do ViaCEP
-    - Permite um endereço pelo CEP.
+    - Realiza a busca de endereços através da integração com a API do ViaCEP, permitindo a obtenção automática de dados de endereço com base no CEP fornecido.
 
 ## Tecnologias Utilizadas
 
